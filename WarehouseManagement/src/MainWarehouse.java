@@ -1,9 +1,11 @@
 import java.util.ArrayList;
+import java.util.function.IntConsumer;
 
 public final class MainWarehouse implements IObservable{
 
     private ArrayList<IObserver> observerList = new ArrayList<IObserver>();
     static MainWarehouse mw = null;
+    IOrderCommand command = new OrderCommand(this);
     ToyWarehouse tw;
     FoodWarehouse fw;
 
@@ -31,6 +33,14 @@ public final class MainWarehouse implements IObservable{
 
     public FoodWarehouse getFoodWarehouse() {
         return fw;
+    }
+
+    public void Order(Product p, int quantity){
+        command.order(p,quantity);
+    }
+
+    public void undoOrder(){
+        command.undo();
     }
 
     @Override

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class ToyWarehouse implements IObserver, IListOperation{
 
@@ -21,6 +22,24 @@ public class ToyWarehouse implements IObserver, IListOperation{
     @Override
     public void clearList() {
         this.toyList.clear();
+    }
+
+    @Override
+    public void addProduct(Product p) {
+        this.toyList.add(p);
+    }
+
+    @Override
+    public void removeProduct(String name) {
+        ArrayList<Product> list = mw.getToyWarehouse().toyList;
+
+        for (Iterator<Product> iterator = list.iterator(); iterator.hasNext(); ) {
+            Product p = iterator.next();
+            if (p.getName().equals(name)) {
+                iterator.remove();
+                return;
+            }
+        }
     }
 
     public ToyWarehouse(MainWarehouse mw) {
