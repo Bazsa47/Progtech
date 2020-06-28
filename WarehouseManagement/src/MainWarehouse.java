@@ -8,20 +8,16 @@ public final class MainWarehouse implements IObservable{
     FoodWarehouse fw;
 
 
-
     public static MainWarehouse getInstance(){
         if (mw == null){
-            mw = new MainWarehouse(new ToyWarehouse(), new FoodWarehouse());
+            mw = new MainWarehouse();
         }
         return mw;
-
     }
 
-    private MainWarehouse(ToyWarehouse tw, FoodWarehouse fw) {
-        this.tw = tw;
-        this.fw = fw;
-        addObserver(tw);
-        addObserver(fw);
+    private MainWarehouse() {
+        this.tw = new ToyWarehouse(this);
+        this.fw = new FoodWarehouse(this);
     }
 
     public void importProduct(Product product, int quantity){
