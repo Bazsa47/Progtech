@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class ToyWarehouse implements IObserver{
+public class ToyWarehouse implements IObserver, IListOperation{
 
     private ArrayList<Product> toyList = new ArrayList<Product>();
     private MainWarehouse mw;
@@ -13,8 +13,14 @@ public class ToyWarehouse implements IObserver{
             }
     }
 
+    @Override
     public int getListSize(){
         return toyList.size();
+    }
+
+    @Override
+    public void clearList() {
+        this.toyList.clear();
     }
 
     public ToyWarehouse(MainWarehouse mw) {
