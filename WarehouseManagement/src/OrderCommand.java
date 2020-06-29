@@ -1,9 +1,11 @@
 public class OrderCommand implements IOrderCommand{
 
     MainWarehouse mw;
+    IOrderStrategy os;
 
-    public OrderCommand(MainWarehouse mw) {
+    public OrderCommand(MainWarehouse mw, IOrderStrategy os) {
         this.mw = mw;
+        this.os = os;
     }
 
     private boolean canUndo = false;
@@ -11,44 +13,12 @@ public class OrderCommand implements IOrderCommand{
     private int quantity;
 
     @Override
-    public void order(Product p, int quantity) {
-        this.p = p;
-        this.quantity=quantity;
-            switch(p.getType()) {
-                case Food:
-                    for (int i = 0; i < quantity; i++) {
-                        mw.getFoodWarehouse().removeProduct(p.getName());
-                    }
-                    break;
-                case Toy:
-                    for (int i = 0; i < quantity; i++) {
-                        mw.getToyWarehouse().removeProduct(p.getName());
-                    }
-                    break;
-                default:
-            }
-            canUndo = true;
+    public void order(Product p, int quantity, float balance) {
+       os.orderProduct(p,quantity,balance);
     }
 
     @Override
     public void undo() {
-        if (canUndo){
-            switch(p.getType()) {
-                case Food:
-                    for (int i = 0; i < quantity; i++) {
-                        mw.getFoodWarehouse().addProduct(p);
-                    }
-                    break;
-                case Toy:
-                    for (int i = 0; i < quantity; i++) {
-                        mw.getToyWarehouse().addProduct(p);
-                    }
-                    break;
-                default:
-            }
-            canUndo = true;
-        }else{
-            System.out.println("Nothing to undo!");
-        }
+        os.undoOrder();
     }
 }
