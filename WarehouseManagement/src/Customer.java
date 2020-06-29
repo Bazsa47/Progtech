@@ -36,7 +36,7 @@ public class Customer {
         this.balance = balance;
     }
 
-    public void Order(Product p, int quantity,float balance){
+    public void Order(Product p, int quantity,float balance) throws NotEnoughMoneyException {
         command.order(p,quantity,balance);
     }
 

@@ -8,12 +8,8 @@ public class OrderCommand implements IOrderCommand{
         this.os = os;
     }
 
-    private boolean canUndo = false;
-    private Product p;
-    private int quantity;
-
     @Override
-    public void order(Product p, int quantity, float balance) {
+    public void order(Product p, int quantity, float balance) throws NotEnoughMoneyException {
        os.orderProduct(p,quantity,balance);
     }
 

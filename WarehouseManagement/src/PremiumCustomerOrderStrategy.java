@@ -11,21 +11,27 @@ public class PremiumCustomerOrderStrategy implements IOrderStrategy{
     }
 
     @Override
-    public void orderProduct(Product p, int quantity, float balance) {
+    public void orderProduct(Product p, int quantity, float balance) throws NotEnoughMoneyException {
         this.p = p;
         this.quantity=quantity;
         switch(p.getType()) {
             case Food:
-                if(quantity*p.getPrice()*1.27f <= balance)
+                if(quantity*p.getPrice() <= balance) {
                     for (int i = 0; i < quantity; i++) {
                         mw.getFoodWarehouse().removeProduct(p.getName());
                     }
+                }else{
+                    throw new NotEnoughMoneyException();
+                }
                 break;
             case Toy:
-                if(quantity*p.getPrice()*1.27f <= balance)
+                if(quantity*p.getPrice() <= balance) {
                     for (int i = 0; i < quantity; i++) {
                         mw.getToyWarehouse().removeProduct(p.getName());
                     }
+                }else{
+                    throw new NotEnoughMoneyException();
+                }
                 break;
             default:
         }
