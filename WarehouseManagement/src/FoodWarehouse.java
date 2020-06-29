@@ -6,6 +6,11 @@ public class FoodWarehouse implements IObserver,IListOperation{
     private ArrayList<Product> foodList = new ArrayList<Product>();
     private MainWarehouse mw;
 
+    public FoodWarehouse(MainWarehouse mw) {
+        this.mw = mw;
+        mw.addObserver(this);
+    }
+
     @Override
     public void update(Product p, int quantity) {
         if (p.getType() == ProductType.Food)
@@ -32,7 +37,6 @@ public class FoodWarehouse implements IObserver,IListOperation{
     @Override
     public void removeProduct(String name) {
         ArrayList<Product> list = mw.getFoodWarehouse().foodList;
-
         for (Iterator<Product> iterator = list.iterator(); iterator.hasNext(); ) {
             Product p = iterator.next();
             if (p.getName().equals(name)) {
@@ -41,10 +45,4 @@ public class FoodWarehouse implements IObserver,IListOperation{
             }
         }
     }
-
-    public FoodWarehouse(MainWarehouse mw) {
-        this.mw = mw;
-        mw.addObserver(this);
-    }
-
 }

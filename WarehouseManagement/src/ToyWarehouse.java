@@ -6,6 +6,11 @@ public class ToyWarehouse implements IObserver, IListOperation{
     private ArrayList<Product> toyList = new ArrayList<Product>();
     private MainWarehouse mw;
 
+    public ToyWarehouse(MainWarehouse mw) {
+        this.mw = mw;
+        mw.addObserver(this);
+    }
+
     @Override
     public void update(Product p, int quantity) {
         if (p.getType() == ProductType.Toy)
@@ -40,10 +45,5 @@ public class ToyWarehouse implements IObserver, IListOperation{
                 return;
             }
         }
-    }
-
-    public ToyWarehouse(MainWarehouse mw) {
-        this.mw = mw;
-        mw.addObserver(this);
     }
 }
